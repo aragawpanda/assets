@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>network-data.json schema — Project 42</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2342a5f5'/><text x='16' y='22' text-anchor='middle' fill='white' font-size='18' font-family='sans-serif'>42</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <p class="back"><a href="../index.html">← Back to Assets</a></p>
+  <h1>network-data.json — schema and source of truth</h1>
+  <p class="subtitle">Project 42 · References</p>
+
+  <div class="reference-content">
+    <p>Each network (mainnet, testnet, creative) has a <code>network-data.json</code> in its folder (<code>mainnet/network-data.json</code>, <code>testnet/network-data.json</code>, <code>creative/network-data.json</code>). These files are the <strong>source of truth</strong> for chain and token data in the assets site. Values are taken from the official genesis and ecosystem config. Field names match Cosmos/genesis where applicable; the same structure holds the essential data used by chainlist.org (no separate chainlist block).</p>
+
+    <h2>Root fields</h2>
+    <table class="chain-table">
+      <thead><tr><th>Field</th><th>Type</th><th>Source</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>environment</code></td><td>string</td><td>—</td><td><code>"mainnet"</code> or <code>"testnet"</code>. Identifies the network.</td></tr>
+        <tr><td><code>name</code></td><td>string</td><td>docs / display</td><td>Human-readable network name (e.g. "Infinite Improbability Drive").</td></tr>
+        <tr><td><code>chain_id</code></td><td>string</td><td>genesis <code>chain_id</code></td><td>Cosmos chain ID (e.g. <code>infinite_421018-1</code>).</td></tr>
+        <tr><td><code>chain_name</code></td><td>string</td><td>docs</td><td>Short name / slug (e.g. <code>infinite</code>). Same concept as chainlist <code>shortName</code>.</td></tr>
+        <tr><td><code>bech32_prefix</code></td><td>string</td><td>docs</td><td>Cosmos Bech32 address prefix (e.g. <code>infinite</code>).</td></tr>
+        <tr><td><code>evm_chain_id</code></td><td>number</td><td>NODE_EVM_CHAIN_ID / EIP-155</td><td>EVM chain ID in decimal (e.g. <code>421018</code>).</td></tr>
+        <tr><td><code>evm_chain_id_hex</code></td><td>string</td><td>derived</td><td>EVM chain ID in hex; must be the hex representation of <code>evm_chain_id</code> (e.g. 421018 → <code>0x66c9a</code>).</td></tr>
+        <tr><td><code>evm_chain_name</code></td><td>string</td><td>—</td><td>Chain identifier for EVM context (e.g. <code>INFINITE</code>). Same concept as chainlist <code>chain</code>.</td></tr>
+        <tr><td><code>evm_network_id</code></td><td>number</td><td>—</td><td>EVM network ID; for this chain same as <code>evm_chain_id</code>.</td></tr>
+        <tr><td><code>info_url</code></td><td>string</td><td>—</td><td>Project / info URL (e.g. <code>https://infinitedrive.xyz</code>).</td></tr>
+        <tr><td><code>icon</code></td><td>string</td><td>—</td><td>Icon key for wallets/explorers (e.g. <code>infinite</code>).</td></tr>
+        <tr><td><code>native_currency</code></td><td>object</td><td>genesis <code>app_state.bank.denom_metadata[0]</code></td><td>Native currency metadata; structure below.</td></tr>
+        <tr><td><code>resources</code></td><td>object</td><td>—</td><td>Genesis path, explorer(s), and other assets.</td></tr>
+        <tr><td><code>endpoints</code></td><td>object</td><td>—</td><td>Endpoints grouped by protocol; each protocol has a list with optional <code>primary</code>. See below.</td></tr>
+        <tr><td><code>faucets</code></td><td>array of strings</td><td>—</td><td>Faucet URLs, if any (optional).</td></tr>
+        <tr><td><code>features</code></td><td>array of objects</td><td>—</td><td>EVM feature flags, e.g. <code>[{ "name": "EIP155" }, { "name": "EIP1559" }]</code> (optional).</td></tr>
+        <tr><td><code>explorers</code></td><td>array of objects</td><td>—</td><td>Block explorers: <code>[{ "name", "url", "icon?", "standard?", "primary?" }]</code>. One may have <code>primary: true</code>.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>native_currency (from genesis bank.denom_metadata)</h2>
+    <table class="chain-table">
+      <thead><tr><th>Field</th><th>Type</th><th>Genesis path</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>name</code></td><td>string</td><td><code>name</code></td><td>Token name (e.g. "Improbability").</td></tr>
+        <tr><td><code>symbol</code></td><td>string</td><td><code>symbol</code></td><td>Token symbol (e.g. "42", "TEST42").</td></tr>
+        <tr><td><code>description</code></td><td>string</td><td><code>description</code></td><td>Token description from genesis.</td></tr>
+        <tr><td><code>base</code></td><td>string</td><td><code>base</code></td><td>Base (atomic) denom; exponent 0 (e.g. <code>drop</code>, <code>tdrop</code>).</td></tr>
+        <tr><td><code>display</code></td><td>string</td><td><code>display</code></td><td>Display denom; exponent 18 (e.g. "Improbability").</td></tr>
+        <tr><td><code>denom_units</code></td><td>array</td><td><code>denom_units</code></td><td>List of denom units; each has <code>denom</code>, <code>exponent</code>, <code>aliases</code>.</td></tr>
+      </tbody>
+    </table>
+    <p>Display decimals for EVM/wallets: use the unit with <code>exponent: 18</code> (typically 18 decimals).</p>
+
+    <h2>denom_units[] (from genesis)</h2>
+    <table class="chain-table">
+      <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>denom</code></td><td>string</td><td>Denom identifier (e.g. <code>drop</code>, <code>Improbability</code>).</td></tr>
+        <tr><td><code>exponent</code></td><td>number</td><td>0 = base (atomic); 18 = display (1 unit = 10^18 base).</td></tr>
+        <tr><td><code>aliases</code></td><td>array of strings</td><td>Alternative names (e.g. <code>["improbability"]</code>).</td></tr>
+      </tbody>
+    </table>
+
+    <h2>resources</h2>
+    <table class="chain-table">
+      <thead><tr><th>Field</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>genesis.path</code></td><td>Path to genesis on this assets site (e.g. <code>/mainnet/genesis.json</code>).</td></tr>
+        <tr><td><code>genesis.curl_output_filename</code></td><td>Filename for <code>curl -o</code> (e.g. <code>genesis.json</code>).</td></tr>
+        <tr><td><code>network_data.path</code></td><td>Path to this network's <code>network-data.json</code> on the assets site (e.g. <code>/mainnet/network-data.json</code>).</td></tr>
+        <tr><td><code>network_data.curl_output_filename</code></td><td>Filename for <code>curl -o</code> (e.g. <code>network-data.json</code>).</td></tr>
+      </tbody>
+    </table>
+    <p>Explorers are listed in the root <code>explorers</code> array; there is no <code>explorer_url</code> in resources.</p>
+
+    <h2>endpoints (by service key name)</h2>
+    <p>Endpoints are grouped by <strong>service key name</strong> (see <a href="NODE_ENDPOINT_SERVICES.html">NODE_ENDPOINT_SERVICES</a>). Supported keys include public APIs and, optionally, P2P seeds.</p>
+    <p>Supported keys:</p>
+    <table class="chain-table">
+      <thead><tr><th>Key name</th><th>Service</th><th>Typical use</th></tr></thead>
+      <tbody>
+        <tr><td><code>p2p</code></td><td>P2P</td><td>Seeds / persistent peers (node-to-node); each entry is a seed URL, e.g. <code>id@host:26656</code>.</td></tr>
+        <tr><td><code>comet-rpc</code></td><td>RPC CometBFT</td><td>Explorers, indexers, low-level queries</td></tr>
+        <tr><td><code>grpc</code></td><td>gRPC (Cosmos SDK)</td><td>Cosmos wallets, apps</td></tr>
+        <tr><td><code>grpc-web</code></td><td>gRPC-Web</td><td>Browser Cosmos apps</td></tr>
+        <tr><td><code>rest</code></td><td>REST API (Cosmos SDK)</td><td>Legacy Cosmos apps</td></tr>
+        <tr><td><code>json-rpc-http</code></td><td>JSON-RPC HTTP (EVM)</td><td>MetaMask, dApps, chainlist</td></tr>
+        <tr><td><code>json-rpc-ws</code></td><td>JSON-RPC WebSocket (EVM)</td><td>Real-time dApps</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><strong>Keys:</strong> one of the key names above. Use lowercase with hyphen.</li>
+      <li><strong>Value:</strong> array of endpoint objects (use empty array <code>[]</code> if the service is not yet offered for this network.</li>
+    </ul>
+    <p>Each endpoint object:</p>
+    <table class="chain-table">
+      <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>url</code></td><td>string</td><td>Endpoint URL.</td></tr>
+        <tr><td><code>primary</code></td><td>boolean</td><td>Optional. Exactly one entry per service should have <code>primary: true</code>; that one is preferred (e.g. for MetaMask or default choice).</td></tr>
+      </tbody>
+    </table>
+    <p>Example:</p>
+    <pre><code>"endpoints": {
+  "p2p": [
+    { "url": "seed-id@seed.example.com:26656", "primary": true }
+  ],
+  "comet-rpc": [],
+  "grpc": [],
+  "grpc-web": [],
+  "rest": [],
+  "json-rpc-http": [
+    { "url": "https://evm-rpc.infinitedrive.xyz", "primary": true },
+    { "url": "https://backup-rpc.example.com" }
+  ],
+  "json-rpc-ws": [
+    { "url": "wss://evm-ws.infinitedrive.xyz", "primary": true }
+  ]
+}</code></pre>
+    <p>Normalisation to chainlist <code>rpc</code>: collect all <code>url</code> from <code>endpoints.json-rpc-http</code> and <code>endpoints.json-rpc-ws</code> (primary first within each, then by key order), as <code>[{ "url": "..." }, ...]</code>.</p>
+
+    <h2>explorers[] (block explorers)</h2>
+    <table class="chain-table">
+      <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>name</code></td><td>string</td><td>Explorer display name.</td></tr>
+        <tr><td><code>url</code></td><td>string</td><td>Explorer base URL.</td></tr>
+        <tr><td><code>icon</code></td><td>string</td><td>Optional icon key (e.g. <code>blockscout</code>).</td></tr>
+        <tr><td><code>standard</code></td><td>string</td><td>Optional standard (e.g. <code>EIP3091</code>).</td></tr>
+        <tr><td><code>primary</code></td><td>boolean</td><td>Optional. Exactly one explorer should have <code>primary: true</code>; that one is preferred (e.g. default in MetaMask).</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Chainlist.org alignment</h2>
+    <p>Chainlist <a href="https://chainlist.org/rpcs.json" target="_blank" rel="noopener">rpcs.json</a> uses a different shape; our schema holds the same essential values in a single structure:</p>
+    <ul>
+      <li><code>name</code> → chainlist <code>name</code></li>
+      <li><code>evm_chain_name</code> → chainlist <code>chain</code></li>
+      <li><code>chain_name</code> → chainlist <code>shortName</code></li>
+      <li><code>evm_chain_id</code> → chainlist <code>chainId</code></li>
+      <li><code>evm_network_id</code> → chainlist <code>networkId</code></li>
+      <li><code>info_url</code> → chainlist <code>infoURL</code></li>
+      <li><code>icon</code> → chainlist <code>icon</code></li>
+      <li><code>native_currency</code> (name, symbol, exponent 18) → chainlist <code>nativeCurrency</code> (name, symbol, decimals)</li>
+      <li><code>endpoints</code> → chainlist <code>rpc</code> (flatten: all <code>url</code> from <code>endpoints.json-rpc-http</code>, <code>endpoints.json-rpc-ws</code>; primary first per service)</li>
+      <li><code>faucets</code> → chainlist <code>faucets</code></li>
+      <li><code>features</code> → chainlist <code>features</code></li>
+      <li><code>explorers</code> → chainlist <code>explorers</code></li>
+      <li><code>environment === "testnet"</code> → chainlist <code>isTestnet</code></li>
+    </ul>
+    <p>No nested <code>chainlist</code> object; one structure, one source of truth.</p>
+
+    <h2>Genesis sources</h2>
+    <ul>
+      <li>Mainnet: <a href="https://assets.infinitedrive.xyz/mainnet/genesis.json" target="_blank" rel="noopener">assets.infinitedrive.xyz/mainnet/genesis.json</a></li>
+      <li>Testnet: <a href="https://assets.infinitedrive.xyz/testnet/genesis.json" target="_blank" rel="noopener">assets.infinitedrive.xyz/testnet/genesis.json</a></li>
+    </ul>
+    <p>Do not replace or swap field names: each field carries the value indicated above. When updating data, prefer editing the JSON and letting the site consume it.</p>
+  </div>
+
+  <script>
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) window.location.reload();
+    });
+  </script>
+</body>
+</html>

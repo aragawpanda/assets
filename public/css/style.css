@@ -308,3 +308,66 @@ a:hover {
   white-space: pre-wrap;
   word-break: break-all;
 }
+
+/* Reference docs (references/*.html) */
+.reference-content h2 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid #00ff4144;
+}
+.reference-content h2:first-child {
+  margin-top: 0;
+}
+.reference-content h3 {
+  font-size: 0.95rem;
+  color: #00aa55;
+  margin: 1.25rem 0 0.4rem;
+}
+.reference-content p {
+  margin: 0.5rem 0 1rem;
+}
+.reference-content code {
+  background: rgba(0, 255, 65, 0.08);
+  padding: 0.15em 0.35em;
+  border: 1px solid #00ff4144;
+  font-size: 0.9em;
+}
+.reference-content pre {
+  margin: 0.75rem 0 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid #00ff4144;
+  color: #00dd88;
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-x: auto;
+}
+.reference-content pre code {
+  background: none;
+  padding: 0;
+  border: none;
+}
+.reference-content ul {
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.5rem;
+  list-style: disc;
+}
+.reference-content li {
+  margin: 0.35rem 0;
+  color: #00dd88;
+}
+.reference-content hr {
+  border: none;
+  border-top: 1px solid #00ff4144;
+  margin: 1.5rem 0;
+}
+.reference-content .chain-table {
+  margin: 0.5rem 0 1rem;
+}
+.reference-content .chain-table th:last-child,
+.reference-content .chain-table td:last-child {
+  min-width: 0;
+}

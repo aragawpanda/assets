@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Node endpoint and service types — Project 42</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2342a5f5'/><text x='16' y='22' text-anchor='middle' fill='white' font-size='18' font-family='sans-serif'>42</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <p class="back"><a href="../index.html">← Back to Assets</a></p>
+  <h1>Node endpoint and service types</h1>
+  <p class="subtitle">Project 42 · References</p>
+
+  <div class="reference-content">
+    <p>This document describes the <strong>types of services or endpoints</strong> that an Infinite blockchain node (Drive) can expose. It serves as a single reference to understand what each one is, what it is for, and who consumes it, in both Cosmos/CometBFT and EVM contexts. The information is based on <a href="https://docs.infinitedrive.xyz/es/drive/services/catalog/node0-infinite/#configuraci%C3%B3n-de-puertos" target="_blank" rel="noopener">Drive documentation</a> (service catalog, port configuration) and the <a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/" target="_blank" rel="noopener">blockchain node port reference</a>, plus standard Cosmos SDK and Ethereum terminology.</p>
+    <p>The default ports cited correspond to <strong>service 0 (Mainnet)</strong>; for Testnet and other services an offset is applied (see Drive documentation).</p>
+    <p><strong>Note:</strong> The current consensus engine is <strong>CometBFT</strong> (successor to Tendermint Core since 2022). CometBFT is used as the primary name; where it adds context, the previous name is indicated.</p>
+
+    <hr>
+
+    <h2>Quick classification</h2>
+    <table class="chain-table">
+      <thead><tr><th>Category</th><th>Services</th><th>Primary use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Network (required for node)</strong></td><td>P2P, RPC (CometBFT)</td><td>Consensus and low-level queries</td></tr>
+        <tr><td><strong>Public API (optional)</strong></td><td>gRPC, gRPC-Web, REST, JSON-RPC HTTP, JSON-RPC WebSocket</td><td>Wallets, dApps, explorers, tools</td></tr>
+        <tr><td><strong>Monitoring (optional)</strong></td><td>Prometheus, EVM Metrics, Geth Metrics</td><td>Metrics and observability</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Identifiers (key names)</strong> to uniquely reference each service:</p>
+    <table class="chain-table">
+      <thead><tr><th>Key name</th><th>Service</th></tr></thead>
+      <tbody>
+        <tr><td><code>p2p</code></td><td>P2P</td></tr>
+        <tr><td><code>comet-rpc</code></td><td>RPC CometBFT</td></tr>
+        <tr><td><code>grpc</code></td><td>gRPC</td></tr>
+        <tr><td><code>grpc-web</code></td><td>gRPC-Web</td></tr>
+        <tr><td><code>rest</code></td><td>REST API</td></tr>
+        <tr><td><code>json-rpc-http</code></td><td>JSON-RPC HTTP</td></tr>
+        <tr><td><code>json-rpc-ws</code></td><td>JSON-RPC WebSocket</td></tr>
+        <tr><td><code>prometheus</code></td><td>Prometheus</td></tr>
+        <tr><td><code>evm-metrics</code></td><td>EVM Metrics</td></tr>
+        <tr><td><code>geth-metrics</code></td><td>Geth Metrics</td></tr>
+        <tr><td><code>abci</code></td><td>ABCI (internal, do not expose)</td></tr>
+        <tr><td><code>pprof</code></td><td>pprof (development, do not expose)</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Note:</strong> P2P is not an "endpoint" that wallets or dApps connect to; it is node-to-node communication. Public RPC listings (e.g. chainlist) typically refer to <strong>JSON-RPC HTTP/WebSocket</strong> (EVM) and <strong>gRPC/gRPC-Web</strong> and <strong>REST</strong> (Cosmos). In <a href="NETWORK_DATA_JSON_SCHEMA.html">network-data.json</a>, the <strong><code>p2p</code></strong> key can still be used under <code>endpoints</code> to list <strong>P2P seeds</strong> (and optionally persistent peers) so node operators have a single place to copy seed URLs; each entry uses the same <code>{ "url", "primary?" }</code> shape, with <code>url</code> being e.g. <code>seed-id@host:26656</code>.</p>
+
+    <hr>
+
+    <h2>1. P2P (port 26656)</h2>
+    <p><strong>Key name:</strong> <code>p2p</code></p>
+    <p><strong>Required for node:</strong> Yes (to participate in the network).</p>
+    <ul>
+      <li><strong>What it is:</strong> <strong>Peer-to-peer</strong> communication port of the <strong>CometBFT</strong> consensus engine (formerly Tendermint Core). Blocks, transactions, and consensus messages flow through it between nodes.</li>
+      <li><strong>What it's for:</strong> Peer discovery, blockchain synchronization, and consensus. Not intended for end clients (wallets, dApps) to connect.</li>
+      <li><strong>Who uses it:</strong> Only other nodes in the network (seeds, persistent peers). Not exposed as an "endpoint" in chainlist-style listings or in <code>network-data.json</code> for end users.</li>
+      <li><strong>Reference:</strong> <a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/#p2p-port-26656" target="_blank" rel="noopener">Drive – P2P</a>; CometBFT P2P.</li>
+    </ul>
+
+    <hr>
+
+    <h2>2. RPC CometBFT (port 26657)</h2>
+    <p><strong>Key name:</strong> <code>comet-rpc</code></p>
+    <p><strong>Required for node:</strong> No. <strong>Optional</strong> if you want external queries or a public RPC.</p>
+    <ul>
+      <li><strong>What it is:</strong> <strong>CometBFT RPC API</strong> (formerly Tendermint) (HTTP and WebSocket). Exposes node status, blocks, transactions, and ABCI queries.</li>
+      <li><strong>What it's for:</strong> Low-level blockchain queries (blocks, txs, status), transaction submission, and use by development and infrastructure tools. It is the layer below application APIs (gRPC, REST, JSON-RPC EVM).</li>
+      <li><strong>Who uses it:</strong> Explorers, indexers, operations scripts, RPC aggregators. User wallets and dApps typically use gRPC/REST (Cosmos) or JSON-RPC (EVM), not this RPC directly.</li>
+      <li><strong>Reference:</strong> <a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/#rpc-port-26657" target="_blank" rel="noopener">Drive – RPC</a>; CometBFT RPC.</li>
+    </ul>
+
+    <hr>
+
+    <h2>3. gRPC (port 9090)</h2>
+    <p><strong>Key name:</strong> <code>grpc</code></p>
+    <p><strong>Optional.</strong> Enable if you offer a public API or wallet/application connections for Cosmos.</p>
+    <ul>
+      <li><strong>What it is:</strong> <strong>Cosmos SDK gRPC</strong> server for application state queries (accounts, balances, modules, etc.).</li>
+      <li><strong>What it's for:</strong> High-performance, typed queries. The recommended standard in Cosmos for applications and wallets that talk to the node.</li>
+      <li><strong>Who uses it:</strong> Cosmos wallets, explorers, backends that query state (bank, staking, gov, etc.). Not accessible from the browser without a proxy; for browser use gRPC-Web.</li>
+      <li><strong>Reference:</strong> <a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/#grpc-port-9090" target="_blank" rel="noopener">Drive – gRPC</a>; Cosmos SDK gRPC.</li>
+    </ul>
+
+    <hr>
+
+    <h2>4. gRPC-Web (port 9091)</h2>
+    <p><strong>Key name:</strong> <code>grpc-web</code></p>
+    <p><strong>Optional.</strong> Enable if web applications or browser wallets need to query the node.</p>
+    <ul>
+      <li><strong>What it is:</strong> <strong>gRPC-Web</strong> server: same contract as gRPC but accessible from the browser (HTTP/1.1).</li>
+      <li><strong>What it's for:</strong> Same queries as gRPC (Cosmos SDK) but from frontends and web wallets without deploying a separate gRPC-Web proxy.</li>
+      <li><strong>Who uses it:</strong> Cosmos dApps and wallets that run in the browser. Requires gRPC (9090) to be enabled.</li>
+      <li><strong>Reference:</strong> <a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/#grpc-web-port-9091" target="_blank" rel="noopener">Drive – gRPC-Web</a>; Cosmos SDK gRPC-Web.</li>
+    </ul>
+
+    <hr>
+
+    <h2>5. REST API (port 1317)</h2>
+    <p><strong>Key name:</strong> <code>rest</code></p>
+    <p><strong>Optional.</strong> Enable for compatibility with legacy applications or REST preference.</p>
+    <ul>
+      <li><strong>What it is:</strong> <strong>Cosmos SDK REST API</strong> (HTTP). The "legacy" query interface; many projects prioritize gRPC.</li>
+      <li><strong>What it's for:</strong> HTTP (GET/POST) queries to chain state. Useful for simple integrations or tools that already speak REST.</li>
+      <li><strong>Who uses it:</strong> Legacy applications, scripts, some explorers. For new things gRPC is usually preferred.</li>
+      <li><strong>Reference:</strong> <a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/#rest-api-port-1317" target="_blank" rel="noopener">Drive – REST API</a>; Cosmos SDK API (Legacy REST).</li>
+    </ul>
+
+    <hr>
+
+    <h2>6. JSON-RPC HTTP (port 8545)</h2>
+    <p><strong>Key name:</strong> <code>json-rpc-http</code></p>
+    <p><strong>Optional.</strong> Enable for EVM wallets (MetaMask), dApps, and Ethereum tools.</p>
+    <ul>
+      <li><strong>What it is:</strong> <strong>Ethereum JSON-RPC over HTTP</strong> endpoint. Exposes standard Ethereum methods (<code>eth_*</code>, <code>net_*</code>, <code>web3_*</code>) for the EVM embedded in the chain.</li>
+      <li><strong>What it's for:</strong> Enabling Ethereum-compatible clients (MetaMask, Remix, Web3.js, Ethers.js) to query balances, send transactions, and call contracts without changing API.</li>
+      <li><strong>Who uses it:</strong> MetaMask and other EVM wallets, dApps, Remix, Hardhat, etc. The one typically listed in chainlist and <code>network-data.json</code> as public RPC (protocol <code>https</code>).</li>
+      <li><strong>Reference:</strong> <a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/#json-rpc-http-port-8545" target="_blank" rel="noopener">Drive – JSON-RPC HTTP</a>; Ethereum JSON-RPC (EIP-1474, etc.).</li>
+    </ul>
+
+    <hr>
+
+    <h2>7. JSON-RPC WebSocket (port 8546)</h2>
+    <p><strong>Key name:</strong> <code>json-rpc-ws</code></p>
+    <p><strong>Optional.</strong> Enable if you need real-time events (new blocks, logs, confirmations).</p>
+    <ul>
+      <li><strong>What it is:</strong> Same <strong>Ethereum JSON-RPC</strong> API but over <strong>WebSocket</strong>. Allows subscriptions (<code>eth_subscribe</code>) to events.</li>
+      <li><strong>What it's for:</strong> Real-time notifications (new blocks, contract logs, transaction status) without HTTP polling.</li>
+      <li><strong>Who uses it:</strong> Reactive dApps, backends that listen for events, live dashboards. In public listings it usually appears as second protocol (e.g. <code>wss://</code>) alongside HTTP.</li>
+      <li><strong>Reference:</strong> <a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/#json-rpc-websocket-port-8546" target="_blank" rel="noopener">Drive – JSON-RPC WebSocket</a>; Ethereum JSON-RPC over WebSocket.</li>
+    </ul>
+
+    <hr>
+
+    <h2>8. Prometheus (port 26660)</h2>
+    <p><strong>Key name:</strong> <code>prometheus</code></p>
+    <p><strong>Optional.</strong> For node monitoring only.</p>
+    <ul>
+      <li><strong>What it is:</strong> <strong>Prometheus metrics</strong> endpoint for the CometBFT engine (consensus, network, node performance).</li>
+      <li><strong>What it's for:</strong> Scraping metrics for Grafana, alerts, and operational monitoring. Not a blockchain API for end users.</li>
+      <li><strong>Who uses it:</strong> Prometheus, Grafana, infrastructure teams. Not listed as a public endpoint for wallets or dApps.</li>
+      <li><strong>Reference:</strong> <a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/#prometheus-port-26660" target="_blank" rel="noopener">Drive – Prometheus</a>.</li>
+    </ul>
+
+    <hr>
+
+    <h2>9. EVM Metrics (port 6065)</h2>
+    <p><strong>Key name:</strong> <code>evm-metrics</code></p>
+    <p><strong>Optional.</strong> For EVM layer monitoring only.</p>
+    <ul>
+      <li><strong>What it is:</strong> <strong>Prometheus metrics</strong> specific to the EVM: execution, gas, transaction processing.</li>
+      <li><strong>What it's for:</strong> Performance analysis and EVM usage on the node.</li>
+      <li><strong>Who uses it:</strong> Monitoring tools. Not an RPC for applications.</li>
+      <li><strong>Reference:</strong> <a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/#evm-metrics-port-6065" target="_blank" rel="noopener">Drive – EVM Metrics</a>.</li>
+    </ul>
+
+    <hr>
+
+    <h2>10. Geth Metrics (port 8100)</h2>
+    <p><strong>Key name:</strong> <code>geth-metrics</code></p>
+    <p><strong>Optional.</strong> For monitoring only, in Geth-compatible format.</p>
+    <ul>
+      <li><strong>What it is:</strong> <strong>Geth-format metrics</strong> (Ethereum client) for integration with monitoring stacks already used on Ethereum networks.</li>
+      <li><strong>What it's for:</strong> Reusing dashboards and alerts designed for Geth without changing the metrics format.</li>
+      <li><strong>Who uses it:</strong> Geth-compatible monitoring tools. Not an API endpoint for users.</li>
+      <li><strong>Reference:</strong> <a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/#geth-metrics-port-8100" target="_blank" rel="noopener">Drive – Geth Metrics</a>.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Unexposed services (reference only)</h2>
+    <ul>
+      <li><strong>ABCI (26658)</strong> — <strong>Key name:</strong> <code>abci</code>. Internal CometBFT ↔ application communication. Must not be exposed.</li>
+      <li><strong>pprof (6060)</strong> — <strong>Key name:</strong> <code>pprof</code>. Profiling/debug in development. Do not expose in production.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Relationship to network-data.json and public listings</h2>
+    <p>In the <a href="NETWORK_DATA_JSON_SCHEMA.html">network-data.json</a> schema, the <strong><code>endpoints</code></strong> object uses <strong>service key names</strong> as keys (same as in the table above). Supported keys include public APIs and <strong><code>p2p</code></strong> for listing P2P seeds (so node operators can copy seed URLs from one place). Internal or local-only services (ABCI, pprof, Prometheus, EVM Metrics, Geth Metrics) are not included in <code>endpoints</code>.</p>
+    <table class="chain-table">
+      <thead><tr><th>Node service type</th><th>Key in <code>endpoints</code></th><th>Typical use in listings</th></tr></thead>
+      <tbody>
+        <tr><td>P2P (26656)</td><td><code>p2p</code></td><td>P2P seeds / persistent peers (node operators)</td></tr>
+        <tr><td>RPC CometBFT (26657)</td><td><code>comet-rpc</code></td><td>Explorers, indexers</td></tr>
+        <tr><td>gRPC (9090)</td><td><code>grpc</code></td><td>Cosmos wallets, apps</td></tr>
+        <tr><td>gRPC-Web (9091)</td><td><code>grpc-web</code></td><td>Browser Cosmos apps</td></tr>
+        <tr><td>REST API (1317)</td><td><code>rest</code></td><td>Legacy Cosmos apps</td></tr>
+        <tr><td>JSON-RPC HTTP (8545)</td><td><code>json-rpc-http</code></td><td>Public RPC for MetaMask / chainlist</td></tr>
+        <tr><td>JSON-RPC WebSocket (8546)</td><td><code>json-rpc-ws</code></td><td>Public RPC for real-time subscriptions</td></tr>
+      </tbody>
+    </table>
+    <p>Each key has an array of <code>{ "url", "primary?" }</code> objects. Use an empty array <code>[]</code> when the service is not offered for that network. Chainlist <code>rpc</code> is built from URLs in <code>json-rpc-http</code> and <code>json-rpc-ws</code> (primary first).</p>
+
+    <hr>
+
+    <h2>Summary table</h2>
+    <table class="chain-table">
+      <thead><tr><th>Key name</th><th>Service</th><th>Port (default)</th><th>Required</th><th>Protocol/standard</th><th>Who consumes it</th></tr></thead>
+      <tbody>
+        <tr><td><code>p2p</code></td><td>P2P</td><td>26656</td><td>Yes</td><td>CometBFT P2P</td><td>Other nodes</td></tr>
+        <tr><td><code>comet-rpc</code></td><td>RPC CometBFT</td><td>26657</td><td>No</td><td>CometBFT RPC</td><td>Infra, explorers, scripts</td></tr>
+        <tr><td><code>grpc</code></td><td>gRPC</td><td>9090</td><td>No</td><td>Cosmos SDK gRPC</td><td>Cosmos wallets/apps</td></tr>
+        <tr><td><code>grpc-web</code></td><td>gRPC-Web</td><td>9091</td><td>No</td><td>gRPC-Web</td><td>Web Cosmos apps</td></tr>
+        <tr><td><code>rest</code></td><td>REST API</td><td>1317</td><td>No</td><td>Cosmos SDK REST (legacy)</td><td>Legacy apps, scripts</td></tr>
+        <tr><td><code>json-rpc-http</code></td><td>JSON-RPC HTTP</td><td>8545</td><td>No</td><td>Ethereum JSON-RPC</td><td>MetaMask, dApps, chainlist</td></tr>
+        <tr><td><code>json-rpc-ws</code></td><td>JSON-RPC WebSocket</td><td>8546</td><td>No</td><td>Ethereum JSON-RPC WS</td><td>Real-time dApps</td></tr>
+        <tr><td><code>prometheus</code></td><td>Prometheus</td><td>26660</td><td>No</td><td>Prometheus</td><td>Monitoring</td></tr>
+        <tr><td><code>evm-metrics</code></td><td>EVM Metrics</td><td>6065</td><td>No</td><td>Prometheus</td><td>EVM monitoring</td></tr>
+        <tr><td><code>geth-metrics</code></td><td>Geth Metrics</td><td>8100</td><td>No</td><td>Geth metrics</td><td>Monitoring</td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://docs.infinitedrive.xyz/es/drive/services/catalog/node0-infinite/#configuraci%C3%B3n-de-puertos" target="_blank" rel="noopener">Infinite Mainnet (node0-infinite) – Environment variables and ports</a> — Drive Documentation</li>
+      <li><a href="https://docs.infinitedrive.xyz/es/drive/services/ports/blockchain-nodes/" target="_blank" rel="noopener">Port reference: Blockchain nodes</a> — Drive Documentation</li>
+      <li>Cosmos SDK: <a href="https://docs.cosmos.network/main/run-node/interact-node#using-grpc" target="_blank" rel="noopener">gRPC</a>, <a href="https://docs.cosmos.network/main/run-node/interact-node#using-rest" target="_blank" rel="noopener">REST</a>, <a href="https://docs.cosmos.network/main/run-node/interact-node" target="_blank" rel="noopener">API</a></li>
+      <li>CometBFT (formerly Tendermint Core): <a href="https://docs.cometbft.com/v0.38/spec/rpc/" target="_blank" rel="noopener">RPC</a>, P2P</li>
+      <li>Ethereum: <a href="https://ethereum.org/en/developers/docs/apis/json-rpc/" target="_blank" rel="noopener">JSON-RPC</a>, EIP-1474</li>
+    </ul>
+  </div>
+
+  <script>
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) window.location.reload();
+    });
+  </script>
+</body>
+</html>
