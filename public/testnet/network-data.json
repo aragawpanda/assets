@@ -86,6 +86,10 @@
       "icon": "blockscout",
       "standard": "EIP3091",
       "primary": true
+    },
+    {
+      "name": "DriveStats",
+      "url": "https://drivestats.online"
     }
   ]
 }
