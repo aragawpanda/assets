@@ -1,0 +1,7 @@
+# assets-a: static site (Worker with [assets])
+# Deploy: npx wrangler deploy
+name = "assets"
+compatibility_date = "2026-03-01"
+
+[assets]
+directory = "./public"

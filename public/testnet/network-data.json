@@ -1,0 +1,91 @@
+{
+  "environment": "testnet",
+  "name": "Infinite Improbability Drive Testnet",
+  "chain_id": "infinite_421018001-1",
+  "chain_name": "infinite",
+  "bech32_prefix": "infinite",
+  "evm_chain_id": 421018001,
+  "evm_chain_id_hex": "0x191f829",
+  "evm_chain_name": "INFINITE",
+  "evm_network_id": 421018001,
+  "info_url": "https://infinitedrive.xyz",
+  "icon": "infinite",
+  "native_currency": {
+    "name": "TestImprobability",
+    "symbol": "TEST42",
+    "description": "TestImprobability Token \u2014 Project 42 Testnet: Sovereign, Perpetual, DAO-Governed",
+    "base": "tdrop",
+    "display": "TestImprobability",
+    "denom_units": [
+      {
+        "denom": "tdrop",
+        "exponent": 0,
+        "aliases": []
+      },
+      {
+        "denom": "TestImprobability",
+        "exponent": 18,
+        "aliases": [
+          "improbability"
+        ]
+      }
+    ]
+  },
+  "resources": {
+    "genesis": {
+      "path": "/testnet/genesis.json",
+      "curl_output_filename": "genesis.json"
+    },
+    "network_data": {
+      "path": "/testnet/network-data.json",
+      "curl_output_filename": "network-data.json"
+    }
+  },
+  "endpoints": {
+    "p2p": [
+      {
+        "url": "ed3a45ee1ad114830afe6de7dc90c61f893c04da@server-xenia88.infinitedrive.xyz:26666",
+        "primary": true
+      }
+    ],
+    "comet-rpc": [
+      {
+        "url": "https://comet-rpc-testnet.infinitedrive.xyz",
+        "primary": true
+      }
+    ],
+    "grpc": [
+      {
+        "url": "https://grpc-testnet.infinitedrive.xyz",
+        "primary": true
+      }
+    ],
+    "grpc-web": [],
+    "rest": [],
+    "json-rpc-http": [
+      {
+        "url": "https://evm-rpc-testnet.infinitedrive.xyz",
+        "primary": true
+      }
+    ],
+    "json-rpc-ws": []
+  },
+  "faucets": [],
+  "features": [
+    {
+      "name": "EIP155"
+    },
+    {
+      "name": "EIP1559"
+    }
+  ],
+  "explorers": [
+    {
+      "name": "Infinite Drive Testnet Explorer",
+      "url": "https://testnet-scan.infinitedrive.xyz",
+      "icon": "blockscout",
+      "standard": "EIP3091",
+      "primary": true
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "environment": "mainnet",
+  "name": "Infinite Improbability Drive",
+  "chain_id": "infinite_421018-1",
+  "chain_name": "infinite",
+  "bech32_prefix": "infinite",
+  "evm_chain_id": 421018,
+  "evm_chain_id_hex": "0x66b4a",
+  "evm_chain_name": "INFINITE",
+  "evm_network_id": 421018,
+  "info_url": "https://infinitedrive.xyz",
+  "icon": "infinite",
+  "native_currency": {
+    "name": "Improbability",
+    "symbol": "42",
+    "description": "Improbability Token (42) - Fuel for the Infinite Improbability Drive. Each cup is the tea that runs the drive. The drive runs on tea. Properly prepared.",
+    "base": "drop",
+    "display": "Improbability",
+    "denom_units": [
+      {
+        "denom": "drop",
+        "exponent": 0,
+        "aliases": []
+      },
+      {
+        "denom": "Improbability",
+        "exponent": 18,
+        "aliases": [
+          "improbability"
+        ]
+      }
+    ]
+  },
+  "resources": {
+    "genesis": {
+      "path": "/mainnet/genesis.json",
+      "curl_output_filename": "genesis.json"
+    },
+    "network_data": {
+      "path": "/mainnet/network-data.json",
+      "curl_output_filename": "network-data.json"
+    }
+  },
+  "endpoints": {
+    "p2p": [
+      {
+        "url": "fe304bbda1a243eb2bd30a4558923b39d04ca5eb@server-xenia88.infinitedrive.xyz:26656",
+        "primary": true
+      }
+    ],
+    "comet-rpc": [
+      {
+        "url": "https://comet-rpc.infinitedrive.xyz",
+        "primary": true
+      },
+      {
+        "url": "https://comet-rpc-infinite.mschihuahua.org"
+      },
+      {
+        "url": "https://panda-rpc-comet.xyz"
+      }
+    ],
+    "grpc": [
+      {
+        "url": "https://grpc.infinitedrive.xyz",
+        "primary": true
+      },
+      {
+        "url": "https://grpc-infinite.mschihuahua.org"
+      },
+      {
+        "url": "https://panda-rpc-grpc.xyz"
+      }
+    ],
+    "grpc-web": [],
+    "rest": [],
+    "json-rpc-http": [
+      {
+        "url": "https://evm-rpc.infinitedrive.xyz",
+        "primary": true
+      },
+      {
+        "url": "https://evm-rpc-infinite.mschihuahua.org"
+      },
+      {
+        "url": "https://panda-rpc-evm.xyz"
+      }
+    ],
+    "json-rpc-ws": []
+  },
+  "faucets": [],
+  "features": [
+    {
+      "name": "EIP155"
+    },
+    {
+      "name": "EIP1559"
+    }
+  ],
+  "explorers": [
+    {
+      "name": "Infinite Drive Explorer",
+      "url": "https://scan.infinitedrive.xyz",
+      "icon": "blockscout",
+      "standard": "EIP3091",
+      "primary": true
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+<!-- Single source for the network detail page. Loaded by mainnet/index.html and testnet/index.html. -->
+<p class="back"><a href="../index.html">← Back to Assets</a></p>
+<h1 id="network-heading"></h1>
+<p class="subtitle" id="network-subtitle">Project 42</p>
+<p id="network-intro"></p>
+<p>All values below come from <code>network-data.json</code>.</p>
+
+<section>
+  <h2>Network</h2>
+  <table class="chain-table">
+    <tbody id="network-scalars-tbody">
+      <tr><td colspan="2" class="muted">Loading…</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Native currency</h2>
+  <table class="chain-table">
+    <tbody id="native-currency-tbody">
+      <tr><td colspan="2" class="muted">Loading…</td></tr>
+    </tbody>
+  </table>
+  <div id="native-currency-denom-units" style="display:none;"></div>
+</section>
+
+<section>
+  <h2>Resources</h2>
+  <table class="chain-table">
+    <thead>
+      <tr><th>Key</th><th>Value</th><th>Action</th></tr>
+    </thead>
+    <tbody id="resources-tbody">
+      <tr><td colspan="3" class="muted">Loading…</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Endpoints</h2>
+  <table class="chain-table">
+    <thead>
+      <tr><th>Key</th><th>URL</th><th>Actions</th></tr>
+    </thead>
+    <tbody id="endpoints-tbody">
+      <tr><td colspan="3" class="muted">Loading…</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="faucets-section" style="display:none;">
+  <h2>Faucets</h2>
+  <table class="chain-table">
+    <tbody id="faucets-tbody"></tbody>
+  </table>
+</section>
+
+<section id="features-section" style="display:none;">
+  <h2>Features</h2>
+  <table class="chain-table">
+    <thead>
+      <tr><th>name</th></tr>
+    </thead>
+    <tbody id="features-tbody"></tbody>
+  </table>
+</section>
+
+<section id="explorers-section" style="display:none;">
+  <h2>Explorers</h2>
+  <table class="chain-table">
+    <thead>
+      <tr><th>name</th><th>url</th></tr>
+    </thead>
+    <tbody id="explorers-tbody"></tbody>
+  </table>
+</section>
+
+<div class="copy-command-modal" id="copy-command-modal" aria-hidden="true">
+  <div class="copy-command-modal__box">
+    <button type="button" class="copy-command-modal__close" id="copy-command-modal-close" aria-label="Close">×</button>
+    <h3 class="copy-command-modal__title" id="copy-command-modal-title"></h3>
+    <p class="copy-command-modal__description" id="copy-command-modal-description"></p>
+    <pre class="copy-command-modal__pre" id="copy-command-modal-pre"></pre>
+    <button type="button" class="copy-btn" id="copy-command-modal-copy-btn">Copy</button>
+  </div>
+</div>

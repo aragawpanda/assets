@@ -1,0 +1,552 @@
+{
+  "app_name": "infinited",
+  "app_version": "0.1.10",
+  "genesis_time": "2026-01-29T05:45:06.29883692Z",
+  "chain_id": "infinite_421018-1",
+  "initial_height": 1,
+  "app_hash": null,
+  "app_state": {
+    "07-tendermint": null,
+    "auth": {
+      "params": {
+        "max_memo_characters": "256",
+        "tx_sig_limit": "10",
+        "tx_size_cost_per_byte": "10",
+        "sig_verify_cost_ed25519": "590",
+        "sig_verify_cost_secp256k1": "1000"
+      },
+      "accounts": [
+        {
+          "@type": "/cosmos.auth.v1beta1.ModuleAccount",
+          "base_account": {
+            "address": "infinite1hw2jnpmpu90a6wavc58z06gfa4hlnsxu6ucy77",
+            "pub_key": null,
+            "account_number": "0",
+            "sequence": "0"
+          },
+          "name": "strategic_delegation",
+          "permissions": []
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.ModuleAccount",
+          "base_account": {
+            "address": "infinite1axrrvp0njl0enddurqjgh689dapndqhuulfykn",
+            "pub_key": null,
+            "account_number": "1",
+            "sequence": "0"
+          },
+          "name": "security_rewards",
+          "permissions": []
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.ModuleAccount",
+          "base_account": {
+            "address": "infinite1aa3juu74gk30na783se02kvhqfnk5cw2dw9q2g",
+            "pub_key": null,
+            "account_number": "2",
+            "sequence": "0"
+          },
+          "name": "perpetual_rd",
+          "permissions": []
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.ModuleAccount",
+          "base_account": {
+            "address": "infinite1yp7fqxca2yyjzjjxhysp259f78hpzpefj86h4g",
+            "pub_key": null,
+            "account_number": "3",
+            "sequence": "0"
+          },
+          "name": "fish_bootstrap",
+          "permissions": []
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.ModuleAccount",
+          "base_account": {
+            "address": "infinite1mfl2z7xaxcnzg5vwt6l3k3yx7cpa4rwkdtkglk",
+            "pub_key": null,
+            "account_number": "4",
+            "sequence": "0"
+          },
+          "name": "privacy_resistance",
+          "permissions": []
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.ModuleAccount",
+          "base_account": {
+            "address": "infinite1amu3h5cwyd6zr5082056sx599c2dp9en3wkpte",
+            "pub_key": null,
+            "account_number": "5",
+            "sequence": "0"
+          },
+          "name": "community_growth",
+          "permissions": []
+        },
+        {
+          "@type": "/cosmos.vesting.v1beta1.ContinuousVestingAccount",
+          "base_vesting_account": {
+            "base_account": {
+              "address": "infinite10fhk6nsvuw4mhfdtv6zux754n8mz2z39ynqqf7",
+              "pub_key": null,
+              "account_number": "6",
+              "sequence": "0"
+            },
+            "original_vesting": [
+              {
+                "denom": "drop",
+                "amount": "100000000000000000000000000"
+              }
+            ],
+            "delegated_free": [],
+            "delegated_vesting": [],
+            "end_time": "3095388000"
+          },
+          "start_time": "1769666400"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "infinite1v0x6cmhgw3450h5u6fvamtdt3yv0pu6punk42k",
+          "pub_key": null,
+          "account_number": "7",
+          "sequence": "0"
+        }
+      ]
+    },
+    "authz": {
+      "authorization": []
+    },
+    "bank": {
+      "params": {
+        "send_enabled": [],
+        "default_send_enabled": true
+      },
+      "balances": [
+        {
+          "address": "infinite1yp7fqxca2yyjzjjxhysp259f78hpzpefj86h4g",
+          "coins": [
+            {
+              "denom": "drop",
+              "amount": "10000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "infinite1v0x6cmhgw3450h5u6fvamtdt3yv0pu6punk42k",
+          "coins": [
+            {
+              "denom": "drop",
+              "amount": "100000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "infinite10fhk6nsvuw4mhfdtv6zux754n8mz2z39ynqqf7",
+          "coins": [
+            {
+              "denom": "drop",
+              "amount": "100000000000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "infinite1hw2jnpmpu90a6wavc58z06gfa4hlnsxu6ucy77",
+          "coins": [
+            {
+              "denom": "drop",
+              "amount": "40000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "infinite1mfl2z7xaxcnzg5vwt6l3k3yx7cpa4rwkdtkglk",
+          "coins": [
+            {
+              "denom": "drop",
+              "amount": "7000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "infinite1axrrvp0njl0enddurqjgh689dapndqhuulfykn",
+          "coins": [
+            {
+              "denom": "drop",
+              "amount": "25000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "infinite1amu3h5cwyd6zr5082056sx599c2dp9en3wkpte",
+          "coins": [
+            {
+              "denom": "drop",
+              "amount": "3000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "infinite1aa3juu74gk30na783se02kvhqfnk5cw2dw9q2g",
+          "coins": [
+            {
+              "denom": "drop",
+              "amount": "15000000000000000000"
+            }
+          ]
+        }
+      ],
+      "supply": [
+        {
+          "denom": "drop",
+          "amount": "100000200000000000000000000"
+        }
+      ],
+      "denom_metadata": [
+        {
+          "description": "Improbability Token (42) — Fuel for the Infinite Improbability Drive. Each cup is the tea that runs the drive. The drive runs on tea. Properly prepared.",
+          "denom_units": [
+            {
+              "denom": "drop",
+              "exponent": 0,
+              "aliases": []
+            },
+            {
+              "denom": "Improbability",
+              "exponent": 18,
+              "aliases": [
+                "improbability"
+              ]
+            }
+          ],
+          "base": "drop",
+          "display": "Improbability",
+          "name": "Improbability",
+          "symbol": "42",
+          "uri": "",
+          "uri_hash": ""
+        }
+      ],
+      "send_enabled": []
+    },
+    "consensus": null,
+    "distribution": {
+      "params": {
+        "community_tax": "0.020000000000000000",
+        "base_proposer_reward": "0.010000000000000000",
+        "bonus_proposer_reward": "0.040000000000000000",
+        "withdraw_addr_enabled": true
+      },
+      "fee_pool": {
+        "community_pool": []
+      },
+      "delegator_withdraw_infos": [],
+      "previous_proposer": "",
+      "outstanding_rewards": [],
+      "validator_accumulated_commissions": [],
+      "validator_historical_rewards": [],
+      "validator_current_rewards": [],
+      "delegator_starting_infos": [],
+      "validator_slash_events": []
+    },
+    "erc20": {
+      "params": {
+        "enable_erc20": true,
+        "permissionless_registration": true
+      },
+      "token_pairs": [
+        {
+          "contract_owner": 1,
+          "erc20_address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+          "denom": "drop",
+          "enabled": true
+        }
+      ],
+      "allowances": [],
+      "native_precompiles": [
+        "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+      ],
+      "dynamic_precompiles": []
+    },
+    "evidence": {
+      "evidence": []
+    },
+    "evm": {
+      "accounts": [],
+      "params": {
+        "evm_denom": "drop",
+        "extra_eips": [],
+        "evm_channels": [],
+        "access_control": {
+          "create": {
+            "access_type": "ACCESS_TYPE_PERMISSIONLESS",
+            "access_control_list": []
+          },
+          "call": {
+            "access_type": "ACCESS_TYPE_PERMISSIONLESS",
+            "access_control_list": []
+          }
+        },
+        "active_static_precompiles": [
+          "0x0000000000000000000000000000000000000100",
+          "0x0000000000000000000000000000000000000400",
+          "0x0000000000000000000000000000000000000800",
+          "0x0000000000000000000000000000000000000801",
+          "0x0000000000000000000000000000000000000802",
+          "0x0000000000000000000000000000000000000803",
+          "0x0000000000000000000000000000000000000804",
+          "0x0000000000000000000000000000000000000805",
+          "0x0000000000000000000000000000000000000806",
+          "0x0000000000000000000000000000000000000807"
+        ],
+        "history_serve_window": "8192",
+        "extended_denom_options": {
+          "extended_denom": "drop"
+        }
+      },
+      "preinstalls": []
+    },
+    "feegrant": {
+      "allowances": []
+    },
+    "feemarket": {
+      "params": {
+        "no_base_fee": false,
+        "base_fee_change_denominator": 8,
+        "elasticity_multiplier": 2,
+        "enable_height": "0",
+        "base_fee": "1000000000",
+        "min_gas_price": "0",
+        "min_gas_multiplier": "0.500000000000000000"
+      },
+      "block_gas": "0"
+    },
+    "genutil": {
+      "gen_txs": [
+        {
+          "body": {
+            "messages": [
+              {
+                "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
+                "description": {
+                  "moniker": "Xenia",
+                  "identity": "",
+                  "website": "",
+                  "security_contact": "",
+                  "details": ""
+                },
+                "commission": {
+                  "rate": "0.100000000000000000",
+                  "max_rate": "0.200000000000000000",
+                  "max_change_rate": "0.010000000000000000"
+                },
+                "min_self_delegation": "1000000000000000000",
+                "delegator_address": "",
+                "validator_address": "infinitevaloper1v0x6cmhgw3450h5u6fvamtdt3yv0pu6p6qvmnf",
+                "pubkey": {
+                  "@type": "/cosmos.crypto.ed25519.PubKey",
+                  "key": "Flbhl7WJ7sEY2ISTAnRJcleNrKH2Y8R9UB28tRQ8ex4="
+                },
+                "value": {
+                  "denom": "drop",
+                  "amount": "1000000000000000000"
+                }
+              }
+            ],
+            "memo": "4c84be33d5a0da329969544bb2dc61d57eeec9e6@172.18.0.2:26656",
+            "timeout_height": "0",
+            "unordered": false,
+            "timeout_timestamp": null,
+            "extension_options": [],
+            "non_critical_extension_options": []
+          },
+          "auth_info": {
+            "signer_infos": [
+              {
+                "public_key": {
+                  "@type": "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
+                  "key": "Ag53H/yQevS5ymhiAEuF4L0M37AHMcd6PVeJrI/elYJi"
+                },
+                "mode_info": {
+                  "single": {
+                    "mode": "SIGN_MODE_DIRECT"
+                  }
+                },
+                "sequence": "0"
+              }
+            ],
+            "fee": {
+              "amount": [],
+              "gas_limit": "200000",
+              "payer": "",
+              "granter": ""
+            },
+            "tip": null
+          },
+          "signatures": [
+            "vrQuZrOfLnWZtZlLpmwT0p2V/MDkYPbz0bnM9ky82X5vXwf96AZCkBWiwwP24Jt61KUuBX4d/1ASdMqgMQSARgE="
+          ]
+        }
+      ]
+    },
+    "gov": {
+      "starting_proposal_id": "1",
+      "deposits": [],
+      "votes": [],
+      "proposals": [],
+      "deposit_params": null,
+      "voting_params": null,
+      "tally_params": null,
+      "params": {
+        "min_deposit": [
+          {
+            "denom": "drop",
+            "amount": "1000000000000000000"
+          }
+        ],
+        "max_deposit_period": "172800s",
+        "voting_period": "172800s",
+        "quorum": "0.334000000000000000",
+        "threshold": "0.500000000000000000",
+        "veto_threshold": "0.334000000000000000",
+        "min_initial_deposit_ratio": "0.000000000000000000",
+        "proposal_cancel_ratio": "0.500000000000000000",
+        "proposal_cancel_dest": "",
+        "expedited_voting_period": "86400s",
+        "expedited_threshold": "0.667000000000000000",
+        "expedited_min_deposit": [
+          {
+            "denom": "drop",
+            "amount": "5000000000000000000"
+          }
+        ],
+        "burn_vote_quorum": false,
+        "burn_proposal_deposit_prevote": false,
+        "burn_vote_veto": true,
+        "min_deposit_ratio": "0.010000000000000000"
+      },
+      "constitution": ""
+    },
+    "ibc": {
+      "client_genesis": {
+        "clients": [],
+        "clients_consensus": [],
+        "clients_metadata": [],
+        "params": {
+          "allowed_clients": [
+            "*"
+          ]
+        },
+        "create_localhost": false,
+        "next_client_sequence": "0"
+      },
+      "connection_genesis": {
+        "connections": [],
+        "client_connection_paths": [],
+        "next_connection_sequence": "0",
+        "params": {
+          "max_expected_time_per_block": "30000000000"
+        }
+      },
+      "channel_genesis": {
+        "channels": [],
+        "acknowledgements": [],
+        "commitments": [],
+        "receipts": [],
+        "send_sequences": [],
+        "recv_sequences": [],
+        "ack_sequences": [],
+        "next_channel_sequence": "0"
+      },
+      "client_v2_genesis": {
+        "counterparty_infos": []
+      },
+      "channel_v2_genesis": {
+        "acknowledgements": [],
+        "commitments": [],
+        "receipts": [],
+        "async_packets": [],
+        "send_sequences": []
+      }
+    },
+    "mint": {
+      "minter": {
+        "inflation": "0.100000000000000000",
+        "annual_provisions": "0.000000000000000000"
+      },
+      "params": {
+        "mint_denom": "drop",
+        "inflation_rate_change": "0.130000000000000000",
+        "inflation_max": "0.200000000000000000",
+        "inflation_min": "0.070000000000000000",
+        "goal_bonded": "0.670000000000000000",
+        "blocks_per_year": "6311520"
+      }
+    },
+    "precisebank": {
+      "balances": [],
+      "remainder": "0"
+    },
+    "slashing": {
+      "params": {
+        "signed_blocks_window": "10000",
+        "min_signed_per_window": "0.050000000000000000",
+        "downtime_jail_duration": "600s",
+        "slash_fraction_double_sign": "0.050000000000000000",
+        "slash_fraction_downtime": "0.000100000000000000"
+      },
+      "signing_infos": [],
+      "missed_blocks": []
+    },
+    "staking": {
+      "params": {
+        "unbonding_time": "1814400s",
+        "max_validators": 100,
+        "max_entries": 7,
+        "historical_entries": 10000,
+        "bond_denom": "drop",
+        "min_commission_rate": "0.000000000000000000"
+      },
+      "last_total_power": "0",
+      "last_validator_powers": [],
+      "validators": [],
+      "delegations": [],
+      "unbonding_delegations": [],
+      "redelegations": [],
+      "exported": false
+    },
+    "transfer": {
+      "port_id": "transfer",
+      "denoms": [],
+      "params": {
+        "send_enabled": true,
+        "receive_enabled": true
+      },
+      "total_escrowed": []
+    },
+    "upgrade": {},
+    "vesting": {}
+  },
+  "consensus": {
+    "params": {
+      "block": {
+        "max_bytes": "22020096",
+        "max_gas": "10000000"
+      },
+      "evidence": {
+        "max_age_num_blocks": "100000",
+        "max_age_duration": "172800000000000",
+        "max_bytes": "1048576"
+      },
+      "validator": {
+        "pub_key_types": [
+          "ed25519"
+        ]
+      },
+      "version": {
+        "app": "0"
+      },
+      "abci": {
+        "vote_extensions_enable_height": "0"
+      }
+    }
+  }
+}
